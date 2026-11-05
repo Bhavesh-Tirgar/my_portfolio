@@ -1,0 +1,74 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Contact | {{ profile.full_name|default:'Bhavesh Tirgar' }}{% endblock %}
+
+{% block content %}
+<section class="section-block section-contact standalone-page" id="contact">
+    <div class="section-cover-banner">
+        <div class="cover-mesh-glow" aria-hidden="true"></div>
+        <h1 class="cover-banner-title">Get in touch</h1>
+    </div>
+
+    <div class="contact-card-frame">
+        <form method="post" action="{% url 'contact' %}" class="designer-form">
+            {% csrf_token %}
+
+            {% if messages %}
+            <div class="form-feedback-alert">
+                {% for message in messages %}
+                <div class="alert-item">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-row-duo">
+                <div class="form-field-group">
+                    <label for="id_name" class="field-label">Full Name</label>
+                    <input type="text" name="name" id="id_name" class="field-input" placeholder="e.g. John Doe" required />
+                </div>
+                <div class="form-field-group">
+                    <label for="id_email" class="field-label">Email Address</label>
+                    <input type="email" name="email" id="id_email" class="field-input" placeholder="e.g. john@domain.com" required />
+                </div>
+            </div>
+
+            <div class="form-field-group">
+                <label for="id_subject" class="field-label">Subject</label>
+                <input type="text" name="subject" id="id_subject" class="field-input" placeholder="Project inquiry or collaboration opportunity" required />
+            </div>
+
+            <div class="form-field-group">
+                <label for="id_message" class="field-label">Your Message</label>
+                <textarea name="message" id="id_message" rows="5" class="field-textarea" placeholder="Tell me about your project, timing, or idea..." required></textarea>
+            </div>
+
+            <div class="form-submit-row">
+                <button type="submit" class="btn-pill btn-pill-dark btn-submit">
+                    <span>Send Message</span>
+                    <span class="arrow-glyph">↗</span>
+                </button>
+            </div>
+        </form>
+
+        <div class="direct-contact-bar">
+            <div class="contact-pill-item">
+                <span class="contact-label">Email</span>
+                <a href="mailto:{{ profile.email|default:'tirgarbhavesh2005@gmail.com' }}" class="contact-val">{{ profile.email|default:'tirgarbhavesh2005@gmail.com' }}</a>
+            </div>
+            <div class="contact-pill-item">
+                <span class="contact-label">Location</span>
+                <span class="contact-val">Gujarat, India</span>
+            </div>
+            <div class="contact-pill-item">
+                <span class="contact-label">Profiles</span>
+                <div class="contact-mini-links">
+                    <a href="{{ profile.github_url|default:'https://github.com/Bhavesh-Tirgar' }}" target="_blank" rel="noreferrer">GitHub</a>
+                    <span>•</span>
+                    <a href="{{ profile.linkedin_url|default:'https://in.linkedin.com/in/bhavesh-tirgar-1734b4286' }}" target="_blank" rel="noreferrer">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

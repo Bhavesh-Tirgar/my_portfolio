@@ -1,0 +1,45 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}About | {{ profile.full_name|default:'Bhavesh Tirgar' }}{% endblock %}
+
+{% block content %}
+<section class="section-block section-about standalone-page" id="about">
+    <div class="section-cover-banner">
+        <div class="cover-mesh-glow" aria-hidden="true"></div>
+        <h1 class="cover-banner-title">About me</h1>
+    </div>
+
+    <div class="about-letter-card">
+        <div class="letter-top-meta">
+            <span class="letter-badge">{{ profile.full_name|default:'Bhavesh Tirgar' }}</span>
+            <span class="letter-location">Gujarat, India • Available for new opportunities</span>
+        </div>
+
+        <div class="letter-body">
+            <p>
+                Passionate about the intersection of elegant interface design and resilient software engineering, I craft modern, intuitive web experiences. Currently pursuing my Master of Computer Applications (MCA) at Gujarat Vidyapith, I focus on full-stack application development using Python, Django, React, and applied AI technologies.
+            </p>
+
+            <p>
+                My philosophy centers on meticulous attention to interface details, fluid micro-interactions, and scalable software architecture. Whether architecting performant backend APIs, integrating AI-driven workflows, or polishing user experiences down to the finest visual nuance, I always strive to build meaningful tools with real-world impact.
+            </p>
+
+            <p>
+                Curious, disciplined, and constantly exploring cutting-edge design and engineering standards, I am always open to ambitious projects, stimulating internships, and creative collaborations.
+            </p>
+        </div>
+
+        <div class="letter-footer">
+            <div class="signature-block">
+                <span class="digital-signature">Bhavesh Tirgar</span>
+                <span class="signature-role">Full-Stack &amp; UI/UX Developer</span>
+            </div>
+
+            <div class="letter-stamp">
+                <a href="{% url 'home' %}#contact" class="btn-pill btn-pill-dark">Get in touch ↗</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

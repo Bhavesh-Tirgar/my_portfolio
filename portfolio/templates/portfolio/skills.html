@@ -1,0 +1,117 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Skills | {{ profile.full_name|default:'Bhavesh Tirgar' }}{% endblock %}
+
+{% block content %}
+<section class="section-block section-skills standalone-page" id="skills">
+    <div class="section-cover-banner">
+        <div class="cover-mesh-glow" aria-hidden="true"></div>
+        <h1 class="cover-banner-title">My skills</h1>
+    </div>
+
+    <!-- Skills Category Progress Meters -->
+    <div class="skills-metrics-grid">
+        <div class="metric-card">
+            <div class="metric-header">
+                <span class="metric-name">Python &amp; Django</span>
+                <span class="metric-pct">95%</span>
+            </div>
+            <div class="metric-bar-track">
+                <div class="metric-bar-fill fill-purple" style="width: 95%;"></div>
+            </div>
+            <span class="metric-desc">Backend architecture, ORM, REST APIs &amp; server logic</span>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <span class="metric-name">Frontend UI / React / JS</span>
+                <span class="metric-pct">88%</span>
+            </div>
+            <div class="metric-bar-track">
+                <div class="metric-bar-fill fill-peach" style="width: 88%;"></div>
+            </div>
+            <span class="metric-desc">Reactive interfaces, modern CSS &amp; design systems</span>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <span class="metric-name">Artificial Intelligence &amp; LLMs</span>
+                <span class="metric-pct">90%</span>
+            </div>
+            <div class="metric-bar-track">
+                <div class="metric-bar-fill fill-coral" style="width: 90%;"></div>
+            </div>
+            <span class="metric-desc">AI prototyping, prompt engineering &amp; tool integration</span>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-header">
+                <span class="metric-name">Databases &amp; SQL</span>
+                <span class="metric-pct">92%</span>
+            </div>
+            <div class="metric-bar-track">
+                <div class="metric-bar-fill fill-teal" style="width: 92%;"></div>
+            </div>
+            <span class="metric-desc">Relational modeling, complex queries &amp; optimization</span>
+        </div>
+    </div>
+
+    <div class="tools-subheading-wrap">
+        <span class="tools-subheading">SOFTWARE • APPS • TOOLS</span>
+    </div>
+
+    <div class="apps-bento-grid">
+        <div class="app-tile">
+            <div class="app-icon-box"><svg width="28" height="28" viewBox="0 0 24 24"><path d="M11.914 2c-5.041 0-4.723 2.18-4.723 2.18l.006 2.261h4.783v.68H5.214S2 6.762 2 11.838c0 5.077 2.802 4.896 2.802 4.896h1.673v-2.35s-.09-2.802 2.756-2.802h4.736s2.665.044 2.665-2.619V4.664S16.955 2 11.914 2zm-2.58 1.487a.952.952 0 1 1 0 1.904.952.952 0 0 1 0-1.904z" fill="#3776AB"/><path d="M12.086 22c5.041 0 4.723-2.18 4.723-2.18l-.006-2.261H12.02v-.68h6.766S22 17.238 22 12.162c0-5.077-2.802-4.896-2.802-4.896h-1.673v2.35s.09 2.802-2.756 2.802H9.998s-2.665-.044-2.665 2.619v4.293S7.045 22 12.086 22zm2.58-1.487a.952.952 0 1 1 0-1.904.952.952 0 0 1 0 1.904z" fill="#FFD43B"/></svg></div>
+            <strong class="app-name">Python</strong>
+            <span class="app-category">Language</span>
+        </div>
+        <div class="app-tile">
+            <div class="app-icon-box django-box"><span class="text-logo">dj</span></div>
+            <strong class="app-name">Django</strong>
+            <span class="app-category">Framework</span>
+        </div>
+        <div class="app-tile">
+            <div class="app-icon-box"><svg width="28" height="28" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4" stroke="#00D8FF" stroke-width="1.4" fill="none"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)" stroke="#00D8FF" stroke-width="1.4" fill="none"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)" stroke="#00D8FF" stroke-width="1.4" fill="none"/><circle cx="12" cy="12" r="2" fill="#00D8FF"/></svg></div>
+            <strong class="app-name">React</strong>
+            <span class="app-category">Frontend</span>
+        </div>
+        <div class="app-tile">
+            <div class="app-icon-box js-box"><span class="text-logo js-logo">JS</span></div>
+            <strong class="app-name">JavaScript</strong>
+            <span class="app-category">ES6+</span>
+        </div>
+        <div class="app-tile">
+            <div class="app-icon-box"><svg width="28" height="28" viewBox="0 0 24 24"><path d="M3 3l1.8 17.5L12 22l7.2-1.5L21 3H3z" fill="#E34F26"/><path d="M12 4.5v15.7l5.7-1.2L19.2 4.5H12z" fill="#EF652A"/><path d="M7 8.5h10l-.4 3.8H9.3l.3 3.5h7.5l-.5 4.5-4.6 1.3-4.6-1.3-.3-4H9l.2 2.3 2.8.8 2.8-.8.3-2.6H6.7L7 8.5z" fill="#FFF"/></svg></div>
+            <strong class="app-name">HTML5 / CSS3</strong>
+            <span class="app-category">Web UI</span>
+        </div>
+        <div class="app-tile">
+            <div class="app-icon-box"><svg width="28" height="28" viewBox="0 0 24 24" fill="#336791"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16.93c-3.96-.49-7-3.86-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.18 5 4.05 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <strong class="app-name">SQL / Postgres</strong>
+            <span class="app-category">Database</span>
+        </div>
+        <div class="app-tile">
+            <div class="app-icon-box"><svg width="28" height="28" viewBox="0 0 24 24" fill="#007ACC"><path d="M17.5 2.5L7.8 10.8 3.5 7.5 1.5 8.7l4.5 4-4.5 4 2 1.2 4.3-3.3 9.7 8.3L23 20.5V3.5l-5.5-1zm0 4.8v9.4L11.5 12 17.5 7.3z"/></svg></div>
+            <strong class="app-name">VS Code</strong>
+            <span class="app-category">Editor</span>
+        </div>
+        <div class="app-tile">
+            <div class="app-icon-box"><svg width="28" height="28" viewBox="0 0 24 24"><path d="M8 24c2.2 0 4-1.8 4-4v-4H8c-2.2 0-4 1.8-4 4s1.8 4 4 4z" fill="#0ACF83"/><path d="M4 12c0-2.2 1.8-4 4-4h4v8H8c-2.2 0-4-1.8-4-4z" fill="#A259FF"/><path d="M4 4c0-2.2 1.8-4 4-4h4v8H8c-2.2 0-4-1.8-4-4z" fill="#F24E1E"/><path d="M12 0h4c2.2 0 4 1.8 4 4s-1.8 4-4 4h-4V0z" fill="#FF7262"/><path d="M20 12c0 2.2-1.8 4-4 4s-4-1.8-4-4 1.8-4 4-4 4 1.8 4 4z" fill="#1ABCFE"/></svg></div>
+            <strong class="app-name">Figma</strong>
+            <span class="app-category">Design</span>
+        </div>
+        <div class="app-tile">
+            <div class="app-icon-box git-box"><svg width="28" height="28" viewBox="0 0 24 24" fill="#F05032"><path d="M21.6 10.9L13.1 2.4c-.6-.6-1.5-.6-2.1 0L8.8 4.6l3.3 3.3c.4-.1.8 0 1.2.2.6.4.8 1.1.7 1.7l3.2 3.2c.7-.1 1.4.1 1.8.7.7.7.7 1.8 0 2.5-.7.7-1.8.7-2.5 0-.5-.5-.7-1.2-.5-1.9l-3-3v4.6c.3.3.4.6.4 1 0 1-.8 1.8-1.8 1.8s-1.8-.8-1.8-1.8c0-.7.4-1.3 1-1.6V9.4c-.6-.3-1-.9-1-1.6 0-.6.3-1.2.8-1.5L8.2 3.9 2.4 9.7c-.6.6-.6 1.5 0 2.1l8.5 8.5c.6.6 1.5.6 2.1 0l8.6-8.6c.6-.6.6-1.5 0-2.1z"/></svg></div>
+            <strong class="app-name">Git &amp; GitHub</strong>
+            <span class="app-category">DevOps</span>
+        </div>
+        <div class="app-tile">
+            <div class="app-icon-box ai-box"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div>
+            <strong class="app-name">AI / LLMs</strong>
+            <span class="app-category">Intelligence</span>
+        </div>
+    </div>
+</section>
+{% endblock %}

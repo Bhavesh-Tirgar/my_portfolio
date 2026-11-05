@@ -1,0 +1,36 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Education &amp; Qualifications | {{ profile.full_name|default:'Bhavesh Tirgar' }}{% endblock %}
+
+{% block content %}
+<section class="section-block section-experience standalone-page" id="education">
+    <div class="section-cover-banner">
+        <div class="cover-mesh-glow" aria-hidden="true"></div>
+        <h1 class="cover-banner-title">Education &amp; Qualifications</h1>
+    </div>
+
+    <div class="experience-gallery">
+        {% for item in education %}
+        <article class="exp-card">
+            <div class="exp-bg-image" style="background-image: url('{% static 'portfolio/images/exp_2.jpg' %}');"></div>
+            <div class="exp-card-overlay"></div>
+            <div class="exp-card-content">
+                <div class="exp-tags-row">
+                    <span class="exp-pill">{% if item.is_current %}Current Degree{% else %}Completed{% endif %}</span>
+                    <span class="exp-date">{{ item.period }}</span>
+                </div>
+                <h2 class="exp-title">{{ item.degree }}</h2>
+                <p class="exp-desc" style="font-weight: 600; color: #FFF; margin-bottom: 0.25rem;">{{ item.institution }}</p>
+                <p class="exp-desc">{{ item.description }}</p>
+                {% if item.location %}
+                <div class="exp-chips-row">
+                    <span>{{ item.location }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

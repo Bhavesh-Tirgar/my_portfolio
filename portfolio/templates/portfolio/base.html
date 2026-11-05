@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portfolio of {{ profile.full_name|default:'Bhavesh Tirgar' }} - Full-Stack Developer & UI/UX Designer" />
+    <title>{% block title %}{{ profile.full_name|default:'Bhavesh Tirgar' }} | Portfolio{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}" />
+</head>
+<body class="designer-body">
+    <!-- Top Ambient Mesh Gradient -->
+    <div class="ambient-mesh-glow" aria-hidden="true"></div>
+
+    <div class="site-container">
+        <!-- Minimalist Header / Navigation Bar -->
+        <header class="site-header" id="header">
+            <div class="nav-inner">
+                <!-- Brand Monogram -->
+                <a href="{% url 'home' %}#hero" class="brand-monogram" aria-label="Home">
+                    <span class="mono-bracket">[</span><span class="mono-text">bt</span><span class="mono-bracket">]</span>
+                </a>
+
+                <!-- Navigation Links -->
+                <nav class="desktop-nav" aria-label="Main navigation">
+                    <a href="{% url 'home' %}#about" class="nav-item">About</a>
+                    <a href="{% url 'home' %}#skills" class="nav-item">Skills</a>
+                    <a href="{% url 'home' %}#experience" class="nav-item">Experience</a>
+                    <a href="{% url 'home' %}#projects" class="nav-item">Projects</a>
+                    <a href="{% url 'home' %}#contact" class="nav-item">Contact</a>
+                </nav>
+
+                <!-- Right Action Bar: Socials + Theme Switch -->
+                <div class="header-actions">
+                    <!-- LinkedIn -->
+                    <a href="{{ profile.linkedin_url|default:'https://in.linkedin.com/in/bhavesh-tirgar-1734b4286' }}" target="_blank" rel="noreferrer" class="social-icon-btn" aria-label="LinkedIn">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9h2.77v8.37H6.46v-8.37M7.84 6.78a1.62 1.62 0 0 0-1.62 1.62c0 .89.73 1.62 1.62 1.62.9 0 1.63-.73 1.63-1.62 0-.9-.73-1.62-1.63-1.62Z"/>
+                        </svg>
+                    </a>
+
+                    <!-- X (Twitter) -->
+                    <a href="https://twitter.com" target="_blank" rel="noreferrer" class="social-icon-btn" aria-label="X (Twitter)">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+
+                    <!-- GitHub -->
+                    <a href="{{ profile.github_url|default:'https://github.com/Bhavesh-Tirgar' }}" target="_blank" rel="noreferrer" class="social-icon-btn" aria-label="GitHub">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
+                        </svg>
+                    </a>
+
+                    <!-- Theme Toggle Switch (Pill slider from Figma) -->
+                    <button class="theme-switch" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+                        <span class="theme-knob"></span>
+                    </button>
+
+                    <!-- Mobile Menu Hamburger -->
+                    <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Open menu">
+                        <span class="hamburger-bar"></span>
+                        <span class="hamburger-bar"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Drawer -->
+            <div class="mobile-drawer" id="mobile-drawer">
+                <nav class="mobile-nav">
+                    <a href="{% url 'home' %}#about" class="mobile-nav-link">About</a>
+                    <a href="{% url 'home' %}#skills" class="mobile-nav-link">Skills</a>
+                    <a href="{% url 'home' %}#experience" class="mobile-nav-link">Experience</a>
+                    <a href="{% url 'home' %}#projects" class="mobile-nav-link">Projects</a>
+                    <a href="{% url 'home' %}#contact" class="mobile-nav-link">Contact</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Viewport Content -->
+        <main class="site-main">
+            {% block content %}{% endblock %}
+        </main>
+
+        <!-- Minimalist Boutique Footer -->
+        <footer class="site-footer">
+            <div class="footer-top-accent"></div>
+            <div class="footer-inner">
+                <div class="footer-brand-wrap">
+                    <span class="mono-bracket">[</span><span class="mono-text">bt</span><span class="mono-bracket">]</span>
+                    <span class="footer-tagline">Modern Web Developer &amp; UI/UX Designer</span>
+                </div>
+
+                <div class="footer-nav-links">
+                    <a href="{% url 'home' %}#about">About</a>
+                    <a href="{% url 'home' %}#skills">Skills</a>
+                    <a href="{% url 'home' %}#experience">Experience</a>
+                    <a href="{% url 'home' %}#projects">Projects</a>
+                    <a href="{% url 'home' %}#contact">Contact</a>
+                </div>
+
+                <div class="footer-bottom-row">
+                    <p class="footer-copy">© <span id="year"></span> {{ profile.full_name|default:'Bhavesh Tirgar' }}. All rights reserved.</p>
+                    <div class="footer-social-row">
+                        <a href="{{ profile.github_url|default:'https://github.com/Bhavesh-Tirgar' }}" target="_blank" rel="noreferrer">GitHub</a>
+                        <span>•</span>
+                        <a href="{{ profile.linkedin_url|default:'https://in.linkedin.com/in/bhavesh-tirgar-1734b4286' }}" target="_blank" rel="noreferrer">LinkedIn</a>
+                        <span>•</span>
+                        <a href="mailto:{{ profile.email|default:'tirgarbhavesh2005@gmail.com' }}">Email</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- GSAP for Smooth Fluid Micro-Interactions -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="{% static 'portfolio/js/script.js' %}"></script>
+</body>
+</html>

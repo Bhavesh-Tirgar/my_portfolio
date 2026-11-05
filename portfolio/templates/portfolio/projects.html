@@ -1,0 +1,98 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Projects | {{ profile.full_name|default:'Bhavesh Tirgar' }}{% endblock %}
+
+{% block content %}
+<section class="section-block section-projects standalone-page" id="projects">
+    <div class="section-cover-banner">
+        <div class="cover-mesh-glow" aria-hidden="true"></div>
+        <h1 class="cover-banner-title">My projects</h1>
+    </div>
+
+    <!-- Spotlight Project: Digital Academy (First Project) -->
+    {% for project in projects|slice:':1' %}
+    <div class="project-spotlight-card">
+        <div class="spotlight-header">
+            <div class="vision-badge">
+                <span class="apple-dot"></span>
+                <span>Featured Full-Stack Project</span>
+            </div>
+            <span class="project-year">2025</span>
+        </div>
+
+        <div class="spotlight-content">
+            <div class="spotlight-text-col">
+                <span class="spotlight-tag">Featured Project</span>
+                <h2 class="spotlight-title">{{ project.title }}</h2>
+                <p class="spotlight-summary">{{ project.summary }}</p>
+                <p class="spotlight-description" style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.25rem;">{{ project.description }}</p>
+                <div class="spotlight-tech-pills">
+                    {% for tech in project.tech_list %}
+                    <span>{{ tech }}</span>
+                    {% endfor %}
+                </div>
+                {% if project.github_url %}
+                <div class="spotlight-actions">
+                    <a href="{{ project.github_url }}" target="_blank" rel="noreferrer" class="btn-pill btn-pill-dark">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/></svg>
+                        <span>GitHub Repository</span>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="spotlight-visual-col">
+                <div class="device-mockup-frame">
+                    <div class="mockup-bar">
+                        <span class="bar-dot"></span>
+                        <span class="bar-dot"></span>
+                        <span class="bar-dot"></span>
+                        <span class="mockup-url">{{ project.github_url }}</span>
+                    </div>
+                    <div class="mockup-screen-preview">
+                        <div class="preview-hero-mock">
+                            <span class="mock-badge">Online Education Platform</span>
+                            <h4>Plan-Based Video &amp; Notes Access</h4>
+                            <div class="mock-cards-row">
+                                <div class="mini-card active">Basic</div>
+                                <div class="mini-card active">Standard</div>
+                                <div class="mini-card active">Premium</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Remaining 4 Projects Grid -->
+    <div class="projects-sub-grid">
+        {% for project in projects|slice:'1:' %}
+        <article class="tech-project-card {% if forloop.counter == 1 %}neon-card{% elif forloop.counter == 2 %}neon-card{% else %}quantum-card{% endif %}">
+            <div class="card-status-bar">
+                <span class="live-dot-pulse {% if forloop.counter > 1 %}blue-pulse{% endif %}"></span>
+                <span class="status-text">Team Project</span>
+                <span class="status-pill {% if forloop.counter > 1 %}blue-pill{% else %}green-pill{% endif %}">Active Repo</span>
+            </div>
+            <h3 class="tech-card-title">{{ project.title }}</h3>
+            <p class="tech-card-desc">{{ project.summary }}</p>
+            <div class="tech-pills-row">
+                {% for tech in project.tech_list %}
+                <span>{{ tech }}</span>
+                {% endfor %}
+            </div>
+            {% if project.github_url %}
+            <div class="tech-card-footer">
+                <a href="{{ project.github_url }}" target="_blank" rel="noreferrer" class="arrow-card-link">
+                    <span>View on GitHub</span>
+                    <span class="arrow-glyph">↗</span>
+                </a>
+            </div>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
