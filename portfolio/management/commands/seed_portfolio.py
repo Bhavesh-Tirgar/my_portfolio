@@ -1,9 +1,11 @@
+import os
+from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 from portfolio.models import Education, Experience, Profile, Project, Skill
 
 
 class Command(BaseCommand):
-    help = 'Populate the portfolio website with resume profile data.'
+    help = 'Populate the portfolio website with resume profile data and default admin user.'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -15,7 +17,26 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         force = options.get('force', False)
 
-        # Profile
+        # 1. Admin Superuser
+        admin_username = os.getenv('DJANGO_SUPERUSER_USERNAME', 'bhavesh')
+        admin_email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'tirgarbhavesh2005@gmail.com')
+        admin_password = os.getenv('DJANGO_SUPERUSER_PASSWORD', 'admin123')
+
+        user, created = User.objects.get_or_create(
+            username=admin_username,
+            defaults={'email': admin_email, 'is_staff': True, 'is_superuser': True}
+        )
+        user.is_staff = True
+        user.is_superuser = True
+        user.email = admin_email
+        user.set_password(admin_password)
+        user.save()
+        if created:
+            self.stdout.write(self.style.SUCCESS(f'Superuser "{admin_username}" created with password "{admin_password}".'))
+        else:
+            self.stdout.write(self.style.SUCCESS(f'Superuser "{admin_username}" password set to "{admin_password}".'))
+
+        # 2. Profile
         if force or not Profile.objects.exists():
             Profile.objects.update_or_create(
                 full_name='Bhavesh Tirgar',
@@ -31,7 +52,7 @@ class Command(BaseCommand):
             )
             self.stdout.write(self.style.SUCCESS('Profile seeded.'))
 
-        # Skills
+        # 3. Skills
         if force or not Skill.objects.exists():
             if force:
                 Skill.objects.all().delete()
@@ -54,7 +75,7 @@ class Command(BaseCommand):
             ])
             self.stdout.write(self.style.SUCCESS('Skills seeded.'))
 
-        # Education
+        # 4. Education
         if force or not Education.objects.exists():
             if force:
                 Education.objects.all().delete()
@@ -98,7 +119,7 @@ class Command(BaseCommand):
             ])
             self.stdout.write(self.style.SUCCESS('Education seeded.'))
 
-        # Projects (The 5 checked projects from GitHub screenshots & resume)
+        # 5. Projects (The 5 checked projects from GitHub screenshots & resume)
         if force or not Project.objects.exists():
             if force:
                 Project.objects.all().delete()
@@ -156,7 +177,7 @@ class Command(BaseCommand):
             ])
             self.stdout.write(self.style.SUCCESS('Projects seeded.'))
 
-        # Experience
+        # 6. Experience
         if force or not Experience.objects.exists():
             if force:
                 Experience.objects.all().delete()

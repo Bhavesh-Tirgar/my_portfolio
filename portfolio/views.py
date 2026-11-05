@@ -1,8 +1,10 @@
+import os
 from pathlib import Path
 
 from django import forms
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.http import FileResponse, Http404
 from django.shortcuts import render
@@ -23,7 +25,25 @@ class ContactForm(forms.ModelForm):
 
 
 def seed_portfolio_data():
-    """Ensure database has initial portfolio data if empty, without overwriting admin updates."""
+    """Ensure database has initial portfolio data and admin superuser, without overwriting admin updates."""
+    # Ensure superuser exists and credentials are valid
+    try:
+        admin_username = os.getenv('DJANGO_SUPERUSER_USERNAME', 'bhavesh')
+        admin_email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'tirgarbhavesh2005@gmail.com')
+        admin_password = os.getenv('DJANGO_SUPERUSER_PASSWORD', 'admin123')
+
+        user, created = User.objects.get_or_create(
+            username=admin_username,
+            defaults={'email': admin_email, 'is_staff': True, 'is_superuser': True}
+        )
+        if created or not user.is_superuser or not user.is_staff:
+            user.is_staff = True
+            user.is_superuser = True
+            user.set_password(admin_password)
+            user.save()
+    except Exception:
+        pass
+
     if not Profile.objects.exists() or not Project.objects.exists():
         try:
             call_command('seed_portfolio')
