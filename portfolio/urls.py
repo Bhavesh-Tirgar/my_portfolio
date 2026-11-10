@@ -12,5 +12,5 @@ urlpatterns = [
     path('resume/download/', views.resume_download, name='resume_download'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
     path('sitemap.xml', views.sitemap_xml, name='sitemap_xml'),
-    path('google<str:filename>', views.google_verify_file, name='google_verify_file'),
+    path('google8fa397fdd5fe6f13.html', views.google_verify_file, name='google_verify_file'),
 ]

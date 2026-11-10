@@ -166,8 +166,5 @@ def sitemap_xml(request):
     return HttpResponse(xml.strip(), content_type="application/xml")
 
 
-def google_verify_file(request, filename):
-    full_name = filename if filename.startswith('google') else f"google{filename}"
-    if full_name.endswith('.html'):
-        return HttpResponse(f"google-site-verification: {full_name}", content_type="text/html")
-    raise Http404()
+def google_verify_file(request):
+    return HttpResponse("google-site-verification: google8fa397fdd5fe6f13.html", content_type="text/html")
