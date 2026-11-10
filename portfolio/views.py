@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.management import call_command
-from django.http import FileResponse, Http404
+from django.http import FileResponse, Http404, HttpResponse
 from django.shortcuts import render
 
 from .models import ContactMessage, Education, Experience, Profile, Project, Skill
@@ -60,6 +60,7 @@ def get_portfolio_context():
         'education': Education.objects.all(),
         'projects': Project.objects.all(),
         'experiences': Experience.objects.all(),
+        'google_site_verification': getattr(settings, 'GOOGLE_SITE_VERIFICATION', ''),
     }
 
 
@@ -114,3 +115,59 @@ def resume_download(request):
         raise Http404('Resume file not found.')
 
     return FileResponse(open(resume_path, 'rb'), as_attachment=True, filename='Bhavesh_Tirgar_Resume.pdf')
+
+
+def robots_txt(request):
+    sitemap_url = request.build_absolute_uri('/sitemap.xml')
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /admin/",
+        f"Sitemap: {sitemap_url}",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
+
+
+def sitemap_xml(request):
+    base_url = request.build_absolute_uri('/')[:-1]
+    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>{base_url}/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{base_url}/about/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>{base_url}/projects/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>{base_url}/skills/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>{base_url}/education/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>{base_url}/contact/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+</urlset>"""
+    return HttpResponse(xml.strip(), content_type="application/xml")
+
+
+def google_verify_file(request, filename):
+    full_name = filename if filename.startswith('google') else f"google{filename}"
+    if full_name.endswith('.html'):
+        return HttpResponse(f"google-site-verification: {full_name}", content_type="text/html")
+    raise Http404()

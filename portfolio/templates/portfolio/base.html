@@ -4,7 +4,70 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Portfolio of {{ profile.full_name|default:'Bhavesh Tirgar' }} - Full-Stack Developer & UI/UX Designer" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="author" content="{{ profile.full_name|default:'Bhavesh Tirgar' }}" />
+    <meta name="description" content="Official portfolio of {{ profile.full_name|default:'Bhavesh Tirgar' }} - Python &amp; Backend Developer (Django, SQL, MongoDB) and MCA student at Gujarat Vidyapith. Explore projects, skills, and experience." />
+    <meta name="keywords" content="Bhavesh Tirgar, Bhavesh, Tirgar, Python Developer, Django Developer, Backend Developer, Gujarat Vidyapith, MCA, Portfolio, Software Engineer, CodeAlpha, Ahmedabad, Gujarat, India" />
+    
+    <!-- Google Search Console Verification Tag -->
+    {% if google_site_verification %}<meta name="google-site-verification" content="{{ google_site_verification }}" />{% endif %}
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+
+    <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{{ profile.full_name|default:'Bhavesh Tirgar' }} | Portfolio" />
+    <meta property="og:title" content="{% block og_title %}{{ profile.full_name|default:'Bhavesh Tirgar' }} | Python Developer &amp; Backend Engineer{% endblock %}" />
+    <meta property="og:description" content="Explore projects, skills, and experience of {{ profile.full_name|default:'Bhavesh Tirgar' }} - Python &amp; Backend Developer specializing in Django, SQL, and Agentic AI." />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'portfolio/images/memoji_hero.png' %}" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ profile.full_name|default:'Bhavesh Tirgar' }} | Python Developer &amp; Backend Engineer" />
+    <meta name="twitter:description" content="Explore projects, skills, and experience of {{ profile.full_name|default:'Bhavesh Tirgar' }} - Python &amp; Backend Developer specializing in Django, SQL, and Agentic AI." />
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'portfolio/images/memoji_hero.png' %}" />
+
+    <!-- Google Structured Data (JSON-LD Person Schema) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Bhavesh Tirgar",
+      "alternateName": "Bhavesh",
+      "jobTitle": "Python Developer & Backend Engineer",
+      "url": "https://bhavesh-portfolio-elv9.onrender.com",
+      "image": "https://bhavesh-portfolio-elv9.onrender.com{% static 'portfolio/images/memoji_hero.png' %}",
+      "email": "mailto:tirgarbhavesh2005@gmail.com",
+      "telephone": "+919313865016",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ahmedabad",
+        "addressRegion": "Gujarat",
+        "addressCountry": "India"
+      },
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Gujarat Vidyapith"
+      },
+      "sameAs": [
+        "https://github.com/Bhavesh-Tirgar",
+        "https://in.linkedin.com/in/bhavesh-tirgar-1734b4286"
+      ],
+      "knowsAbout": [
+        "Python",
+        "Django",
+        "Laravel",
+        "PostgreSQL",
+        "MongoDB",
+        "Agentic AI",
+        "Backend Development",
+        "Full-Stack Web Development"
+      ]
+    }
+    </script>
+
     <title>{% block title %}{{ profile.full_name|default:'Bhavesh Tirgar' }} | Portfolio{% endblock %}</title>
 
     <!-- Google Fonts -->

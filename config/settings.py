@@ -38,6 +38,8 @@ CSRF_TRUSTED_ORIGINS = getenv_list(
     'http://localhost:8000,https://localhost:8000,http://127.0.0.1:8000,https://127.0.0.1:8000,https://*.onrender.com,https://*.vercel.app'
 )
 
+GOOGLE_SITE_VERIFICATION = os.getenv('GOOGLE_SITE_VERIFICATION', '')
+
 if DEBUG:
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
