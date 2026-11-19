@@ -145,3 +145,13 @@ class SeedPortfolioCommandTestCase(TestCase):
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
         self.assertTrue(user.check_password('admin123'))
+
+
+class EmailBackendSafetyTestCase(TestCase):
+    def test_email_backend_safe_without_credentials(self):
+        from config import settings as config_settings
+        # If no SMTP credentials provided, settings must use console (not smtp) to avoid worker hanging
+        if not config_settings.HAS_EMAIL_CREDENTIALS:
+            self.assertEqual(config_settings.EMAIL_BACKEND, 'django.core.mail.backends.console.EmailBackend')
+        self.assertNotEqual(config_settings.EMAIL_BACKEND, 'django.core.mail.backends.smtp.EmailBackend')
+

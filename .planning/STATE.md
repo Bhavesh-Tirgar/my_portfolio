@@ -1,27 +1,17 @@
 # Project State
 
-## Active Milestone
-**Milestone 5: Production Security & Performance Hardening (COMPLETED)**
+## Active Task
+- **Task**: Fix 500 Internal Server Error caused by SMTP worker timeout on unconfigured email credentials.
+- **Status**: RESOLVED (16/16 tests passing)
+- **Mode**: [Debug & Fix Mode]
 
-## Current Status
-- **Quality Score**: **10 / 10**
-- **Test Backpressure**: 15 / 15 tests PASSING (`Ran 15 tests in 19.186s - OK`)
-- **Mode**: [Code & Security Hardening Mode]
+## Root Cause
+When `DEBUG=False` in cloud, `EMAIL_BACKEND` previously defaulted to `smtp.EmailBackend` without verifying that `EMAIL_HOST_USER` and `EMAIL_HOST_PASSWORD` were provided. Calling `send_mail` attempted to connect to `smtp.gmail.com:587`, hanging the Gunicorn worker until the 30s timeout killed the worker process with HTTP 500.
 
-## Implemented Hardening
-1. **Security & Secrets**:
-   - Environment secrets (`.env`, `.env.*`) strictly ignored in `.gitignore`.
-   - Production auto-detection via `RENDER` environment flag ensuring `DEBUG=False` in cloud.
-2. **Abuse Prevention**:
-   - Honeypot trap (`website_url_hp`) on contact form rejecting bot spam submissions automatically.
-3. **Real-time Notifications**:
-   - `send_mail` triggers instantly upon contact form submission sending visitor details to owner email.
-4. **Performance**:
-   - `seed_portfolio_data()` optimized with process-level flag, saving 3 queries per HTTP request.
-5. **Database Drivers**:
-   - `psycopg2-binary>=2.9.9` added to `requirements.txt` for PostgreSQL readiness.
+## Resolution
+1. Guarded `EMAIL_BACKEND` in `config/settings.py`: defaults to `console.EmailBackend` unless both `EMAIL_HOST_USER` and `EMAIL_HOST_PASSWORD` are explicitly set.
+2. Form submissions process instantly with zero network hanging.
+3. Added `EmailBackendSafetyTestCase` to verify the setting invariant.
 
 ## Verification
-- All 15 tests pass without warning.
-- Static collection tested.
-- Superuser seeding verified.
+- `Ran 16 tests in 28.016s - OK`
