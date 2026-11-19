@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core import mail
 from django.core.management import call_command
 from django.test import Client, TestCase
 from django.urls import reverse
@@ -60,6 +61,7 @@ class PortfolioViewsTestCase(TestCase):
             'email': 'recruiter@techcorp.com',
             'subject': 'Interview Invitation',
             'message': 'We reviewed your portfolio and would like to connect.',
+            'website_url_hp': '',  # Honeypot must be empty for real users
         }
         response = self.client.post(reverse('contact'), data)
         self.assertEqual(response.status_code, 200)
@@ -67,6 +69,23 @@ class PortfolioViewsTestCase(TestCase):
         msg = ContactMessage.objects.first()
         self.assertEqual(msg.name, 'Test Recruiter')
         self.assertEqual(msg.email, 'recruiter@techcorp.com')
+        # Assert email notification dispatched
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn('Interview Invitation', mail.outbox[0].subject)
+
+    def test_contact_view_post_honeypot_spam_rejected(self):
+        data = {
+            'name': 'Spam Bot',
+            'email': 'bot@spam.com',
+            'subject': 'Buy crypto',
+            'message': 'Visit my spam link http://spam.com',
+            'website_url_hp': 'http://spam-link.com',  # Filled by bot
+        }
+        response = self.client.post(reverse('contact'), data)
+        self.assertEqual(response.status_code, 200)
+        # Message must be rejected and not saved
+        self.assertEqual(ContactMessage.objects.count(), 0)
+        self.assertEqual(len(mail.outbox), 0)
 
     def test_contact_view_post_invalid(self):
         data = {

@@ -5,6 +5,7 @@ from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.core.management import call_command
 from django.http import FileResponse, Http404, HttpResponse
 from django.shortcuts import render
@@ -13,6 +14,12 @@ from .models import ContactMessage, Education, Experience, Profile, Project, Ski
 
 
 class ContactForm(forms.ModelForm):
+    # Anti-spam honeypot (invisible to human visitors, traps automated bots)
+    website_url_hp = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'style': 'display:none !important;', 'tabindex': '-1', 'autocomplete': 'off'})
+    )
+
     class Meta:
         model = ContactMessage
         fields = ['name', 'email', 'subject', 'message']
@@ -23,10 +30,22 @@ class ContactForm(forms.ModelForm):
             'message': forms.Textarea(attrs={'rows': 5, 'placeholder': 'Tell me about your project or opportunity'}),
         }
 
+    def clean_website_url_hp(self):
+        hp = self.cleaned_data.get('website_url_hp')
+        if hp:
+            raise forms.ValidationError('Spam submission detected.')
+        return hp
+
+
+_IS_SEEDED = False
+
 
 def seed_portfolio_data():
-    """Ensure database has initial portfolio data and admin superuser, without overwriting admin updates."""
-    # Ensure superuser exists and credentials are valid
+    """Ensure database has initial portfolio data and admin superuser once per process."""
+    global _IS_SEEDED
+    if _IS_SEEDED:
+        return
+
     try:
         admin_username = os.getenv('DJANGO_SUPERUSER_USERNAME', 'bhavesh')
         admin_email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'tirgarbhavesh2005@gmail.com')
@@ -41,14 +60,13 @@ def seed_portfolio_data():
             user.is_superuser = True
             user.set_password(admin_password)
             user.save()
+
+        if not Profile.objects.exists() or not Project.objects.exists():
+            call_command('seed_portfolio')
+
+        _IS_SEEDED = True
     except Exception:
         pass
-
-    if not Profile.objects.exists() or not Project.objects.exists():
-        try:
-            call_command('seed_portfolio')
-        except Exception:
-            pass
 
 
 def get_portfolio_context():
@@ -69,7 +87,28 @@ def render_page(request, template_name, extra_context=None):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
+            contact_msg = form.save()
+
+            # Real-time notification email
+            try:
+                owner_email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'tirgarbhavesh2005@gmail.com')
+                send_mail(
+                    subject=f"[Portfolio Inquiry] {contact_msg.subject}",
+                    message=(
+                        f"New message from your portfolio contact form:\n\n"
+                        f"Name: {contact_msg.name}\n"
+                        f"Email: {contact_msg.email}\n"
+                        f"Subject: {contact_msg.subject}\n\n"
+                        f"Message:\n{contact_msg.message}\n\n"
+                        f"View in Admin: {request.build_absolute_uri('/admin/portfolio/contactmessage/')}"
+                    ),
+                    from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', owner_email),
+                    recipient_list=[owner_email],
+                    fail_silently=True,
+                )
+            except Exception:
+                pass
+
             messages.success(request, 'Thank you for your message. I will get back to you soon.')
             form = ContactForm()
 

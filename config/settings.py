@@ -28,11 +28,16 @@ SECRET_KEY = os.getenv(
     'dev-portfolio-secret-key-2026-bhavesh-tirgar-strong-enough-for-local-use'
 )
 
-DEBUG = getenv_bool('DEBUG', True)
-ALLOWED_HOSTS = getenv_list(
-    'ALLOWED_HOSTS',
-    'localhost,127.0.0.1,0.0.0.0,testserver,.onrender.com,.vercel.app,*'
-)
+# Detect Render or production environment
+IS_PRODUCTION = os.getenv('RENDER') is not None or os.getenv('ENVIRONMENT') == 'production'
+DEBUG = getenv_bool('DEBUG', not IS_PRODUCTION)
+
+if DEBUG:
+    default_hosts = 'localhost,127.0.0.1,0.0.0.0,testserver,.onrender.com,.vercel.app,*'
+else:
+    default_hosts = 'localhost,127.0.0.1,0.0.0.0,testserver,.onrender.com,.vercel.app,bhavesh-portfolio-elv9.onrender.com'
+
+ALLOWED_HOSTS = getenv_list('ALLOWED_HOSTS', default_hosts)
 CSRF_TRUSTED_ORIGINS = getenv_list(
     'CSRF_TRUSTED_ORIGINS',
     'http://localhost:8000,https://localhost:8000,http://127.0.0.1:8000,https://127.0.0.1:8000,https://*.onrender.com,https://*.vercel.app'
@@ -139,5 +144,15 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'tirgarbhavesh2005@gmail.com')
+EMAIL_BACKEND = os.getenv(
+    'EMAIL_BACKEND',
+    'django.core.mail.backends.console.EmailBackend' if DEBUG else 'django.core.mail.backends.smtp.EmailBackend'
+)
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
+EMAIL_USE_TLS = getenv_bool('EMAIL_USE_TLS', True)
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

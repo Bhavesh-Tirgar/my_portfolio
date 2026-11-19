@@ -9,6 +9,11 @@ __pycache__/
 venv/
 env/
 
+# Environment secrets
+.env
+.env.*
+!.env.example
+
 # Django
 media/
 staticfiles/

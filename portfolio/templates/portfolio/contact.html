@@ -13,6 +13,7 @@
     <div class="contact-card-frame">
         <form method="post" action="{% url 'contact' %}" class="designer-form">
             {% csrf_token %}
+            {{ form.website_url_hp }}
 
             {% if messages %}
             <div class="form-feedback-alert">
