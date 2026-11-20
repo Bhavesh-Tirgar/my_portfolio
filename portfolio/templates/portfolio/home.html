@@ -297,7 +297,10 @@
                         <span class="bar-dot"></span>
                         <span class="mockup-url">{{ project.github_url }}</span>
                     </div>
-                    <div class="mockup-screen-preview">
+                    <div class="mockup-screen-preview {% if project.image %}has-image{% endif %}">
+                        {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="spotlight-mockup-img" />
+                        {% else %}
                         <div class="preview-hero-mock">
                             <span class="mock-badge">Online Platform</span>
                             <h4>{{ project.title }}</h4>
@@ -307,6 +310,7 @@
                                 {% endfor %}
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -318,6 +322,11 @@
     <div class="projects-sub-grid">
         {% for project in projects|slice:'1:' %}
         <article class="tech-project-card {% if forloop.counter == 1 %}neon-card{% elif forloop.counter == 2 %}neon-card{% else %}quantum-card{% endif %}">
+            {% if project.image %}
+            <div class="tech-card-thumb-wrap">
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="tech-card-thumb-img" />
+            </div>
+            {% endif %}
             <div class="card-status-bar">
                 <span class="live-dot-pulse {% if forloop.counter > 1 %}blue-pulse{% endif %}"></span>
                 <span class="status-text">Team Project</span>
