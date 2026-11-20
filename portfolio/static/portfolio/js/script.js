@@ -116,4 +116,71 @@ document.addEventListener('DOMContentLoaded', function () {
             ease: 'power2.out'
         });
     }
+
+    // 7. MotionSites & React Bits: Spotlight, 3D Gyroscopic Tilt & Magnetic Buttons
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+    if (!prefersReducedMotion) {
+        // A. Spotlight Cursor Follower (Cards & Tiles)
+        const spotlightCards = document.querySelectorAll(
+            '.spotlight-card, .project-spotlight-card, .tech-project-card, .app-tile'
+        );
+
+        spotlightCards.forEach(function (card) {
+            card.addEventListener('mousemove', function (e) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+                card.style.setProperty('--spotlight-opacity', '1');
+            });
+
+            card.addEventListener('mouseleave', function () {
+                card.style.setProperty('--spotlight-opacity', '0');
+            });
+        });
+
+        // B. React Bits: 3D Parallax Tilt (Desktop / Fine pointer)
+        if (isFinePointer) {
+            const tiltCards = document.querySelectorAll(
+                '.tilt-card, .project-spotlight-card, .tech-project-card'
+            );
+
+            tiltCards.forEach(function (card) {
+                card.addEventListener('mousemove', function (e) {
+                    const rect = card.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width;
+                    const y = (e.clientY - rect.top) / rect.height;
+                    const maxTilt = 4.5;
+                    const rotateX = ((0.5 - y) * (maxTilt * 2)).toFixed(2);
+                    const rotateY = ((x - 0.5) * (maxTilt * 2)).toFixed(2);
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
+                });
+
+                card.addEventListener('mouseleave', function () {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+                });
+            });
+
+            // C. React Bits: Magnetic Button Pull
+            const magneticButtons = document.querySelectorAll('.btn-magnetic, .btn-pill');
+
+            magneticButtons.forEach(function (btn) {
+                btn.addEventListener('mousemove', function (e) {
+                    const rect = btn.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    const deltaX = (e.clientX - centerX) * 0.22;
+                    const deltaY = (e.clientY - centerY) * 0.22;
+                    btn.style.transform = `translate(${deltaX.toFixed(1)}px, ${deltaY.toFixed(1)}px)`;
+                });
+
+                btn.addEventListener('mouseleave', function () {
+                    btn.style.transform = '';
+                });
+            });
+        }
+    }
 });

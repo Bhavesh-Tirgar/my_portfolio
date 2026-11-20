@@ -403,6 +403,51 @@ img, svg {
     color: var(--text-primary);
 }
 
+/* React Bits: Kinetic Shiny Text Shimmer */
+@keyframes shinyShimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.shiny-name {
+    background: linear-gradient(
+        90deg,
+        var(--text-primary) 0%,
+        var(--text-primary) 25%,
+        #8B5CF6 45%,
+        #3B82F6 55%,
+        #8B5CF6 65%,
+        var(--text-primary) 85%,
+        var(--text-primary) 100%
+    );
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shinyShimmer 6s linear infinite;
+    display: inline-block;
+}
+
+[data-theme="dark"] .shiny-name {
+    background: linear-gradient(
+        90deg,
+        #FFFFFF 0%,
+        #FFFFFF 25%,
+        #C084FC 45%,
+        #60A5FA 55%,
+        #C084FC 65%,
+        #FFFFFF 85%,
+        #FFFFFF 100%
+    );
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shinyShimmer 6s linear infinite;
+}
+
 .hero-subtext {
     font-size: 1.05rem;
     color: var(--text-secondary);
@@ -1657,6 +1702,109 @@ img, svg {
 
 .footer-social-row span {
     color: var(--border-strong);
+}
+
+/* ========================================================
+   MOTIONSITES.AI & REACT BITS: INTERACTIVE MOTION SYSTEM
+   Spotlight Cards, 3D Gyroscopic Tilt & Magnetic Buttons
+   ======================================================== */
+
+/* 1. Cursor-Tracking Spotlight Cards */
+.spotlight-card,
+.project-spotlight-card,
+.tech-project-card,
+.app-tile {
+    position: relative;
+    overflow: hidden;
+}
+
+.spotlight-card::before,
+.project-spotlight-card::before,
+.tech-project-card::before,
+.app-tile::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+        500px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+        rgba(139, 92, 246, 0.14),
+        transparent 55%
+    );
+    opacity: var(--spotlight-opacity, 0);
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    z-index: 1;
+}
+
+/* Luxury border highlight rim in dark mode */
+[data-theme="dark"] .spotlight-card::before,
+[data-theme="dark"] .project-spotlight-card::before,
+[data-theme="dark"] .tech-project-card::before,
+[data-theme="dark"] .app-tile::before {
+    background: radial-gradient(
+        520px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+        rgba(192, 132, 252, 0.22),
+        rgba(96, 165, 250, 0.1) 40%,
+        transparent 60%
+    );
+}
+
+/* Ensure direct children stay elevated above spotlight glow */
+.spotlight-card > *,
+.project-spotlight-card > *,
+.tech-project-card > *,
+.app-tile > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* 2. React Bits: 3D Parallax Tilt */
+.tilt-card,
+.project-spotlight-card,
+.tech-project-card {
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+/* 3. React Bits: Magnetic Buttons */
+.btn-magnetic,
+.btn-pill {
+    will-change: transform;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 4. MotionSites: Subtle Card Border Glow on Hover */
+.project-spotlight-card:hover,
+.tech-project-card:hover {
+    border-color: rgba(139, 92, 246, 0.35);
+}
+
+[data-theme="dark"] .project-spotlight-card:hover,
+[data-theme="dark"] .tech-project-card:hover {
+    border-color: rgba(192, 132, 252, 0.4);
+}
+
+/* 5. Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    .shiny-name {
+        animation: none !important;
+    }
+    .tilt-card,
+    .project-spotlight-card,
+    .tech-project-card,
+    .btn-magnetic,
+    .btn-pill {
+        transform: none !important;
+        transition: none !important;
+    }
+    .spotlight-card::before,
+    .project-spotlight-card::before,
+    .tech-project-card::before,
+    .app-tile::before {
+        display: none !important;
+    }
 }
 
 /* ========================================================
