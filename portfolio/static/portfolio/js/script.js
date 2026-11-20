@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const targetElement = document.getElementById(targetId);
             if (targetElement) {
                 e.preventDefault();
-                const headerOffset = 80;
+                const headerOffset = 96;
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 

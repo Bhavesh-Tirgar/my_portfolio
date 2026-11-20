@@ -74,10 +74,23 @@
     <!-- Remaining Projects Grid -->
     <div class="projects-sub-grid">
         {% for project in projects|slice:'1:' %}
-        <article class="tech-project-card spotlight-card tilt-card {% if forloop.counter == 1 %}neon-card{% elif forloop.counter == 2 %}neon-card{% else %}quantum-card{% endif %}">
+        <article class="tech-project-card spotlight-card tilt-card">
             {% if project.image %}
             <div class="tech-card-thumb-wrap">
                 <img src="{{ project.image.url }}" alt="{{ project.title }}" class="tech-card-thumb-img" />
+            </div>
+            {% else %}
+            <div class="tech-card-thumb-mock">
+                <div class="mock-terminal-bar">
+                    <span class="mock-dot red"></span>
+                    <span class="mock-dot yellow"></span>
+                    <span class="mock-dot green"></span>
+                    <span class="mock-terminal-path">~/{{ project.slug|default:'repo' }}</span>
+                </div>
+                <div class="mock-terminal-body">
+                    <span class="terminal-cmd">$ git status</span>
+                    <span class="terminal-resp"><span class="text-accent-success">● Active Repo</span> • branch: main</span>
+                </div>
             </div>
             {% endif %}
             <div class="card-status-bar">
@@ -85,7 +98,7 @@
                 <span class="status-text">Team Project</span>
                 <span class="status-pill {% if forloop.counter > 1 %}blue-pill{% else %}green-pill{% endif %}">Active Repo</span>
             </div>
-            <h3 class="tech-card-title">{{ project.title }}</h3>
+            <h3 class="tech-card-title">{{ project.title|cut:'(Team Project)'|cut:' (Team Project)' }}</h3>
             <p class="tech-card-desc">{{ project.summary }}</p>
             <div class="tech-pills-row">
                 {% for tech in project.tech_list %}

@@ -584,6 +584,13 @@ img, svg {
     max-width: var(--site-max-width);
     margin: 0 auto;
     padding: 3rem 1.5rem 5rem;
+    scroll-margin-top: 96px;
+}
+
+section[id],
+.section-cover-banner,
+.project-spotlight-card {
+    scroll-margin-top: 96px;
 }
 
 .section-block.standalone-page {
@@ -1353,19 +1360,106 @@ img, svg {
     box-shadow: var(--shadow-medium);
 }
 
-/* Dark Neon Card (CriseTool Style) */
-.neon-card {
-    background: linear-gradient(145deg, #12131C 0%, #0C0D14 100%);
+[data-theme="dark"] .tech-project-card,
+[data-theme="dark"] .neon-card {
+    background: linear-gradient(145deg, #141522 0%, #0C0D14 100%);
     border-color: rgba(255, 255, 255, 0.1);
     color: #FFFFFF;
 }
 
-.neon-card .tech-card-title {
+[data-theme="dark"] .tech-project-card .tech-card-title,
+[data-theme="dark"] .neon-card .tech-card-title {
     color: #FFFFFF;
 }
 
-.neon-card .tech-card-desc {
+[data-theme="dark"] .tech-project-card .tech-card-desc,
+[data-theme="dark"] .neon-card .tech-card-desc {
     color: #9EA3B5;
+}
+
+[data-theme="dark"] .tech-project-card .tech-pills-row span,
+[data-theme="dark"] .neon-card .tech-pills-row span {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #D1D5DB;
+}
+
+[data-theme="dark"] .tech-project-card .arrow-card-link,
+[data-theme="dark"] .neon-card .arrow-card-link {
+    color: #FFFFFF;
+}
+
+/* Terminal Mockup Fallback for Secondary Project Cards */
+.tech-card-thumb-mock {
+    width: 100%;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, rgba(20, 22, 34, 0.95), rgba(12, 13, 20, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    font-family: var(--font-mono);
+}
+
+[data-theme="light"] .tech-card-thumb-mock {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.mock-terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.55rem 0.85rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+[data-theme="light"] .mock-terminal-bar {
+    border-bottom: 1px solid var(--border-subtle);
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.mock-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+.mock-dot.red { background-color: #EF4444; }
+.mock-dot.yellow { background-color: #F59E0B; }
+.mock-dot.green { background-color: #10B981; }
+
+.mock-terminal-path {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-left: auto;
+}
+
+.mock-terminal-body {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.74rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: #94A3B8;
+}
+
+[data-theme="light"] .mock-terminal-body {
+    color: var(--text-secondary);
+}
+
+.mock-terminal-body .terminal-cmd {
+    color: #38BDF8;
+    font-weight: 600;
+}
+
+[data-theme="light"] .mock-terminal-body .terminal-cmd {
+    color: #2563EB;
+}
+
+.text-accent-success {
+    color: #10B981;
+    font-weight: 600;
 }
 
 .neon-glow-accent {

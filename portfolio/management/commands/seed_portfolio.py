@@ -135,7 +135,7 @@ class Command(BaseCommand):
                     order=1,
                 ),
                 Project(
-                    title='FleetFlow - Fleet Management (Team Project)',
+                    title='FleetFlow - Fleet Management',
                     slug='odoo-fleetflow',
                     summary='Modular fleet tracking and operations management module built on the Odoo enterprise platform.',
                     description='Collaborated with a development team to build a fleet management module on the Odoo platform, managing vehicle operations, maintenance schedules, and route coordination using Git and GitHub for team collaboration.',
@@ -145,7 +145,7 @@ class Command(BaseCommand):
                     order=2,
                 ),
                 Project(
-                    title='IntelliSchedule-AI (Team Project)',
+                    title='IntelliSchedule-AI',
                     slug='intellischedule-ai',
                     summary='Automated scheduling solution powered by AI algorithms for optimized timetable and task planning.',
                     description='Contributed to an AI-based scheduling project as part of a development team, developing logic in Python and utilizing a shared GitHub repository for collaborative sprint delivery.',
@@ -155,7 +155,7 @@ class Command(BaseCommand):
                     order=3,
                 ),
                 Project(
-                    title='Agentic AI Project (Team Project)',
+                    title='Agentic AI Project',
                     slug='agentic-ai-project',
                     summary='Autonomous AI agent system designed for intelligent task orchestration and automated reasoning.',
                     description='Collaborated with a teammate on an agentic AI project, implementing autonomous agents, tool interaction loops, and structured LLM outputs through a shared GitHub repository.',
@@ -165,7 +165,7 @@ class Command(BaseCommand):
                     order=4,
                 ),
                 Project(
-                    title='PLM Eco System (Team Project)',
+                    title='PLM Eco System',
                     slug='plm-eco-system',
                     summary='Product Lifecycle Management (PLM) and Engineering Change Order (ECO) system on Odoo.',
                     description='Collaborated with a team on a product lifecycle management (PLM) and engineering change order (ECO) system on Odoo, structuring workflows, version controls, and engineering status approvals.',
