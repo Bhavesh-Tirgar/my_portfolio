@@ -1,15 +1,25 @@
+databases:
+  - name: portfolio-db
+    databaseName: portfolio
+    user: bhavesh
+    plan: free
+
 services:
   - type: web
     name: bhavesh-portfolio
     runtime: python
     plan: free
-    buildCommand: pip install -r requirements.txt && python manage.py migrate && python manage.py seed_portfolio && python manage.py collectstatic --noinput
+    buildCommand: ./build.sh
     startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DEBUG
         value: "False"
       - key: DJANGO_SECRET_KEY
         generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: portfolio-db
+          property: connectionString
       - key: ALLOWED_HOSTS
         value: "*"
       - key: SECURE_SSL_REDIRECT
